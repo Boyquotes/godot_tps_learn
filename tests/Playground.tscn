@@ -1,0 +1,99 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://assets/prototypetextures/PNG/Green/texture_03.png" type="Texture" id=1]
+[ext_resource path="res://assets/prototypetextures/PNG/Green/texture_04.png" type="Texture" id=2]
+[ext_resource path="res://assets/prototypetextures/PNG/Dark/texture_01.png" type="Texture" id=3]
+[ext_resource path="res://assets/prototypetextures/PNG/Green/texture_02.png" type="Texture" id=4]
+[ext_resource path="res://assets/prototypetextures/PNG/Green/texture_01.png" type="Texture" id=5]
+[ext_resource path="res://character/Character.tscn" type="PackedScene" id=6]
+
+[sub_resource type="CubeMesh" id=3]
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 100, 0.1, 100 )
+
+[sub_resource type="BoxShape" id=4]
+
+[sub_resource type="CubeMesh" id=5]
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_texture = ExtResource( 5 )
+uv1_scale = Vector3( 2, 1, 2 )
+
+[sub_resource type="BoxShape" id=6]
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_texture = ExtResource( 4 )
+uv1_scale = Vector3( 2, 1, 2 )
+
+[sub_resource type="SpatialMaterial" id=10]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 2, 1, 2 )
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_texture = ExtResource( 2 )
+uv1_scale = Vector3( 2, 1, 2 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Levels" type="Spatial" parent="."]
+
+[node name="Floor" type="MeshInstance" parent="Levels"]
+transform = Transform( 100, 0, 0, 0, 0.1, 0, 0, 0, 100, 0, 0, 0 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 7 )
+
+[node name="StaticBody" type="StaticBody" parent="Levels/Floor"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Levels/Floor/StaticBody"]
+shape = SubResource( 4 )
+
+[node name="Platform1" type="MeshInstance" parent="Levels"]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 3.938, 1, 5.272 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 8 )
+
+[node name="StaticBody" type="StaticBody" parent="Levels/Platform1"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Levels/Platform1/StaticBody"]
+shape = SubResource( 6 )
+
+[node name="Platform2" type="MeshInstance" parent="Levels"]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 3.938, 1, 11.3945 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 9 )
+
+[node name="StaticBody" type="StaticBody" parent="Levels/Platform2"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Levels/Platform2/StaticBody"]
+shape = SubResource( 6 )
+
+[node name="Platform3" type="MeshInstance" parent="Levels"]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 3.938, 1, 16.9205 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 10 )
+
+[node name="StaticBody" type="StaticBody" parent="Levels/Platform3"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Levels/Platform3/StaticBody"]
+shape = SubResource( 6 )
+
+[node name="Platform4" type="MeshInstance" parent="Levels"]
+transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 3.938, 1, 22.2232 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 11 )
+
+[node name="StaticBody" type="StaticBody" parent="Levels/Platform4"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Levels/Platform4/StaticBody"]
+shape = SubResource( 6 )
+
+[node name="KinematicBody" parent="." instance=ExtResource( 6 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.73536, 0 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.936501, 0.350665, 0, -0.350665, 0.936501, 0, 5.94073, 6.37432 )
+
+[editable path="KinematicBody"]
