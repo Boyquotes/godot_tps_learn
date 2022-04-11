@@ -40,7 +40,7 @@ uv1_scale = Vector3( 2, 1, 2 )
 [node name="Levels" type="Spatial" parent="."]
 
 [node name="Floor" type="MeshInstance" parent="Levels"]
-transform = Transform( 100, 0, 0, 0, 0.1, 0, 0, 0, 100, 0, 0, 0 )
+transform = Transform( 100, 0, 0, 0, 0.1, 0, 0, 0, 100, -0.514502, 1.28026, -0.0584183 )
 mesh = SubResource( 3 )
 skeleton = NodePath("../..")
 material/0 = SubResource( 7 )
@@ -61,7 +61,7 @@ material/0 = SubResource( 8 )
 shape = SubResource( 6 )
 
 [node name="Platform2" type="MeshInstance" parent="Levels"]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 3.938, 1, 11.3945 )
+transform = Transform( 2, 0, 0, 0, 3, 0, 0, 0, 2, 3.938, 1, 11.3945 )
 mesh = SubResource( 5 )
 material/0 = SubResource( 9 )
 
@@ -71,7 +71,7 @@ material/0 = SubResource( 9 )
 shape = SubResource( 6 )
 
 [node name="Platform3" type="MeshInstance" parent="Levels"]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 3.938, 1, 16.9205 )
+transform = Transform( 2, 0, 0, 0, 4, 0, 0, 0, 2, 3.938, 1, 17.4591 )
 mesh = SubResource( 5 )
 material/0 = SubResource( 10 )
 
@@ -81,7 +81,7 @@ material/0 = SubResource( 10 )
 shape = SubResource( 6 )
 
 [node name="Platform4" type="MeshInstance" parent="Levels"]
-transform = Transform( 2, 0, 0, 0, 1, 0, 0, 0, 2, 3.938, 1, 22.2232 )
+transform = Transform( 2, 0, 0, 0, 5, 0, 0, 0, 2, 3.938, 1, 23.8143 )
 mesh = SubResource( 5 )
 material/0 = SubResource( 11 )
 
@@ -90,8 +90,18 @@ material/0 = SubResource( 11 )
 [node name="CollisionShape" type="CollisionShape" parent="Levels/Platform4/StaticBody"]
 shape = SubResource( 6 )
 
+[node name="Platform5" type="MeshInstance" parent="Levels"]
+transform = Transform( 1.86059, -1.83405, 0, 0.733619, 4.65148, 0, 0, 0, 2, 3.938, 4.11148, 31.503 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 11 )
+
+[node name="StaticBody" type="StaticBody" parent="Levels/Platform5"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Levels/Platform5/StaticBody"]
+shape = SubResource( 6 )
+
 [node name="KinematicBody" parent="." instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.73536, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.96781, 0 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.936501, 0.350665, 0, -0.350665, 0.936501, 0, 5.94073, 6.37432 )

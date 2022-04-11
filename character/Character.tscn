@@ -1,14 +1,16 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://character/spring_arm.gd" type="Script" id=1]
 [ext_resource path="res://character/camera_orbit.gd" type="Script" id=2]
 [ext_resource path="res://character/statemachine/state_sprint.gd" type="Script" id=3]
+[ext_resource path="res://character/statemachine/state_climb.gd" type="Script" id=4]
 [ext_resource path="res://character/statemachine/state_glide.gd" type="Script" id=5]
 [ext_resource path="res://character/statemachine/character_state_machine.gd" type="Script" id=6]
 [ext_resource path="res://character/statemachine/state_idle.gd" type="Script" id=7]
 [ext_resource path="res://character/character.gd" type="Script" id=8]
 [ext_resource path="res://character/statemachine/state_air.gd" type="Script" id=9]
 [ext_resource path="res://character/statemachine/state_walk.gd" type="Script" id=10]
+[ext_resource path="res://composables/climbable.gd" type="Script" id=11]
 
 [sub_resource type="CapsuleShape" id=2]
 
@@ -21,34 +23,14 @@
 [node name="KinematicBody" type="KinematicBody"]
 collision_layer = 2
 script = ExtResource( 8 )
-meshes = NodePath("Meshes")
+meshes = NodePath("RotationHelper/Meshes")
 camera_orbit = NodePath("CameraOrbit")
+climber = NodePath("RotationHelper/Climber")
+rotation_helper = NodePath("RotationHelper")
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 2 )
-
-[node name="Meshes" type="Spatial" parent="."]
-
-[node name="Body" type="MeshInstance" parent="Meshes"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
-mesh = SubResource( 1 )
-skeleton = NodePath("../..")
-
-[node name="Nose" type="MeshInstance" parent="Meshes"]
-transform = Transform( 0.0922668, 0, 0, 0, 0.263635, 0.0426306, 0, -0.0561433, 0.200183, 0.014019, 0.546399, 0.873197 )
-mesh = SubResource( 3 )
-skeleton = NodePath("../..")
-
-[node name="RightEye" type="MeshInstance" parent="Meshes"]
-transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.355947, 0.870776, 0.870624 )
-mesh = SubResource( 4 )
-skeleton = NodePath("../..")
-
-[node name="LeftEye" type="MeshInstance" parent="Meshes"]
-transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.429564, 0.870776, 0.869318 )
-mesh = SubResource( 4 )
-skeleton = NodePath("../..")
 
 [node name="CameraOrbit" type="Spatial" parent="."]
 script = ExtResource( 2 )
@@ -80,3 +62,46 @@ script = ExtResource( 5 )
 
 [node name="Sprint" type="Node" parent="StateMachine"]
 script = ExtResource( 3 )
+
+[node name="Climb" type="Node" parent="StateMachine"]
+script = ExtResource( 4 )
+
+[node name="RotationHelper" type="Spatial" parent="."]
+
+[node name="Meshes" type="Spatial" parent="RotationHelper"]
+
+[node name="Body" type="MeshInstance" parent="RotationHelper/Meshes"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+mesh = SubResource( 1 )
+skeleton = NodePath("../../..")
+
+[node name="Nose" type="MeshInstance" parent="RotationHelper/Meshes"]
+transform = Transform( 0.0922668, 0, 0, 0, 0.263635, 0.0426306, 0, -0.0561433, 0.200183, 0.014019, 0.546399, 0.873197 )
+mesh = SubResource( 3 )
+skeleton = NodePath("../../..")
+
+[node name="RightEye" type="MeshInstance" parent="RotationHelper/Meshes"]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.355947, 0.870776, 0.870624 )
+mesh = SubResource( 4 )
+skeleton = NodePath("../../..")
+
+[node name="LeftEye" type="MeshInstance" parent="RotationHelper/Meshes"]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.429564, 0.870776, 0.869318 )
+mesh = SubResource( 4 )
+skeleton = NodePath("../../..")
+
+[node name="Climber" type="Spatial" parent="RotationHelper"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0737969, 0 )
+script = ExtResource( 11 )
+
+[node name="Chest" type="RayCast" parent="RotationHelper/Climber"]
+enabled = true
+cast_to = Vector3( 0, 0, 2 )
+
+[node name="Head" type="RayCast" parent="RotationHelper/Climber"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41001, 0 )
+enabled = true
+cast_to = Vector3( 0, 0, 2 )
+
+[node name="Position3D" type="Position3D" parent="RotationHelper"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.69436 )

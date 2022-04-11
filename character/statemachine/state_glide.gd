@@ -37,7 +37,7 @@ func physics_update(_delta: float) -> void:
 	if Input.is_action_pressed("move_right"):
 		input_dir.x -= 1
 
-	var player_heading_dir = character.meshes.transform.basis.z
+	var player_heading_dir = character.rotation_helper.transform.basis.z
 	var desired_dir = _get_desired_direction(input_dir)
 	var desired_heading_2d = Vector2(desired_dir.x, desired_dir.z)
 
@@ -46,7 +46,7 @@ func physics_update(_delta: float) -> void:
 	var phi = desired_heading_2d.angle_to(player_heading_2d)
 	var tuned_phi = phi * _delta * character.turn_speed * character.air_friction_rate
 
-	character.meshes.rotation.y += tuned_phi
+	character.rotate_character_y(tuned_phi)
 
 	character.velocity.x = desired_dir.x * character.glide_speed
 	character.velocity.z = desired_dir.z * character.glide_speed
