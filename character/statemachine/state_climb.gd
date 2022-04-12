@@ -1,5 +1,7 @@
 extends CharacterState
 
+var chest_collision_normal = Vector3.ZERO
+
 func handle_input(_event: InputEvent) -> void:
 	pass
 
@@ -36,12 +38,22 @@ func physics_update(_delta: float) -> void:
 
 
 func activated(_message := {}) -> void:
-	var normal = character.climber.get_chest_collision_normal()
-	var y = Vector3.UP
-	var x = normal.cross(y).normalized()
-	var basis = Basis(x, y, -1 * normal)
-	character.rotation_helper.transform.basis = basis
+	if chest_collision_normal == Vector3.ZERO:
+		chest_collision_normal = character.climber.get_chest_collision_normal()
+	print(chest_collision_normal)
+	var axis_z = -1 * chest_collision_normal
+	var axis_x = chest_collision_normal.cross(Vector3.UP).normalized()
+	var axis_y = axis_z.rotated(axis_x, -PI/2)
+
+	character.rotation_helper.transform.basis = Basis(axis_x, axis_y, axis_z)
 
 
 func deactivated() -> void:
-	pass
+	var axis_z = -1 * chest_collision_normal
+	axis_z.y = 0
+	axis_z = axis_z.normalized()
+	var axis_y = Vector3.UP
+	var axis_x = axis_z.cross(Vector3.UP).normalized()
+	character.rotation_helper.transform.basis = Basis(axis_x, axis_y, axis_z)
+
+	chest_collision_normal = Vector3.ZERO
