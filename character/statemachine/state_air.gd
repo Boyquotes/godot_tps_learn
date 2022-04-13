@@ -31,8 +31,37 @@ func physics_update(_delta: float) -> void:
 			state_machine.travel("Idle", { "fallen": true })
 		else:
 			state_machine.travel("Walk", { "fallen": true })
+		return
 	elif Input.is_action_pressed("jump") and prev_jump_button_released:
 		state_machine.travel("Glide")
+		return
+
+	
+	var input_dir = Vector3.ZERO
+
+	if Input.is_action_pressed("move_forward"):
+		input_dir.z += 1
+	if Input.is_action_pressed("move_backward"):
+		input_dir.z -= 1
+	if Input.is_action_pressed("move_left"):
+		input_dir.x += 1
+	if Input.is_action_pressed("move_right"):
+		input_dir.x -= 1
+
+	if not is_equal_approx(input_dir.length_squared(), 0.0):
+		var player_heading_dir = character.rotation_helper.transform.basis.z
+		var desired_dir = _get_desired_direction(input_dir)
+		var desired_heading_2d = Vector2(desired_dir.x, desired_dir.z)
+
+		var player_heading_2d = Vector2(player_heading_dir.x, player_heading_dir.z)
+
+		var phi = desired_heading_2d.angle_to(player_heading_2d)
+
+		if abs(phi) <= deg2rad(30) and character.climber.can_climb():
+			character.rotate_character_y(phi)
+			state_machine.travel("Climb")
+			return
+
 
 func deactivated() -> void:
 	airborne_time = 0

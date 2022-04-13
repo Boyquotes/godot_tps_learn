@@ -24,6 +24,17 @@ var prev_jump_button_released = true
 
 onready var raycasts = climber.get_children()
 
+func _process(delta):
+	var x = rotation_helper.transform.basis.x
+	var y = rotation_helper.transform.basis.y
+	var z = rotation_helper.transform.basis.z
+
+	var global_origin = rotation_helper.global_transform.origin
+
+	DDD.draw_line_3d(global_origin, global_origin + x * 2, Color.green)
+	DDD.draw_line_3d(global_origin, global_origin + y * 2, Color.green)
+	DDD.draw_line_3d(global_origin, global_origin + z * 2, Color.green)
+
 func rotate_character_y(phi: float):
 	rotation_helper.rotation.y += phi
 	
